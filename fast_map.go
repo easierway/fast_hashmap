@@ -1,6 +1,8 @@
 package fast_hashmap
 
-import "container/list"
+import (
+	"container/list"
+)
 
 func hashCode(str string) int {
 	h := 0
@@ -12,9 +14,6 @@ func hashCode(str string) int {
 }
 
 func indexFor(h int, capacity int) int {
-	// h ^= int((uint(h) >> 20) ^ (uint(h) >> 12))
-	// h = h ^ int(uint(h)>>7) ^ int(uint(h)>>4)
-	h = h ^ (h >> 32)
 	return h & (capacity - 1)
 }
 
@@ -52,7 +51,7 @@ type FastMap struct {
 
 func calTableCapacity(length int) int {
 	capacity := 1
-	for capacity < length {
+	for capacity < length*3 {
 		capacity <<= 1
 	}
 	return capacity
